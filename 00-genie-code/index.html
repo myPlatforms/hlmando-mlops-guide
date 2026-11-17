@@ -1,0 +1,1854 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Genie Code와 함께하는 MLflow·학습 파이프라인·배포·감시 핸즈온 가이드">
+      
+      
+      
+      
+        <link rel="prev" href="../00-start/prerequisites.html">
+      
+      
+        <link rel="next" href="./0-1-agents-md.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/databricks-favicon.png">
+      <meta name="generator" content="zensical-0.0.67">
+    
+    
+      
+        <title>0) Genie Code 시작하기 - HL만도 MLOps 핸즈온 랩</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.4ae390e2.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.96d1a7e4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Noto Sans KR";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra_hl.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="네비게이션"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0-genie-code" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../index.html" title="HL만도 MLOps 핸즈온 랩" class="md-header__button md-logo" aria-label="HL만도 MLOps 핸즈온 랩" data-md-component="logo">
+      
+  <img src="../assets/images/databricks-symbol.png" alt="HL만도 MLOps 핸즈온 랩">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="네비게이션">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HL만도 MLOps 핸즈온 랩
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0) Genie Code 시작하기
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="검색">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="검색">
+  <button type="button" class="md-search__button">
+    검색
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="HL만도 MLOps 핸즈온 랩" class="md-nav__button md-logo" aria-label="HL만도 MLOps 핸즈온 랩" data-md-component="logo">
+      
+  <img src="../assets/images/databricks-symbol.png" alt="HL만도 MLOps 핸즈온 랩">
+
+    </a>
+    HL만도 MLOps 핸즈온 랩
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  홈
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../00-start/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  소개
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  소개
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-start/prerequisites.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  사전 준비
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0) Genie Code 시작하기
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  0) Genie Code 시작하기
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./0-1-agents-md.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0.1) 실습 폴더 규칙 AGENTS.md
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./0-2-my-skills.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0.2) 내 스킬 설치
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./0-3-my-instructions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0.3) 내 인스트럭션
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./0-4-first-chat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  0.4) 첫 대화: 공유 데이터
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../01-features/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1) 데이터 확인과 피처
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../02-train/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2) 모델 실험과 등록
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2) 모델 실험과 등록
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-train/2-1-existing-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1) (참고) 기존 모델 등록
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../03-pipeline/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3) 학습 파이프라인 자동화
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3) 학습 파이프라인 자동화
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-pipeline/3-1-bundle.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1) 번들로 선언하기 (데모)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-pipeline/3-2-deployment-job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2) (Optional) deployment job
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-pipeline/3-3-azure-devops.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3) Azure DevOps 연동 (설명)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../04-inference/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4) 배포: 배치·실시간·엣지
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_7">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4) 배포: 배치·실시간·엣지
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-inference/4-1-deploy-edge-app.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1) (참고) 엣지 앱 직접 배포
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../05-monitor/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5) 성능 감시와 재학습
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_8">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5) 성능 감시와 재학습
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-monitor/5-1-data-quality.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1) (시연) Data quality monitoring
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../06-handoff/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6) 현업에 전달: 대시보드 · Genie Agent
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6) 현업에 전달: 대시보드 · Genie Agent
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-handoff/6-1-dashboard.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1) ML Engineer 대시보드
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-handoff/6-2-genie-agent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2) 설비보전팀용 Genie Agent
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../99-wrap-up/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  마무리
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  마무리
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../99-wrap-up/qna.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  세션 Q&A: 모델 가져오기 · 엣지 배포
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  부록
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  부록
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix/instructor.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  부록: 진행팀 운영표
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix/compute.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  부록: 컴퓨트
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix/troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  부록: 문제 해결
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        커스터마이징 방법
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        이 실습에 왜 필요한가
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genie-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Genie Code 사용법 요약
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        실습 파일
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="네비게이션" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../index.html" class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    홈
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="index.html" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    0) Genie Code 시작하기
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0-genie-code">0) Genie Code 시작하기<a class="headerlink" href="#0-genie-code" title="Permanent link">&para;</a></h1>
+<div class="wb-meta">
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg></span> 약 20분</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 0H8C6.9 0 6 .9 6 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6zm4 18H8V2h7v5h5zM4 4v18h16v2H4c-1.1 0-2-.9-2-2V4zm6 6v2h8v-2zm0 4v2h5v-2z"/></svg></span> 페이지 4개</li>
+<li><span class="hl-track hl-track--basic">기본</span></li>
+</ul>
+</div>
+<p><img class="hl-icon" src="../assets/images/brand/icon-genie.svg" alt=""> <strong>Genie Code</strong>는 노트북·SQL Editor·Catalog·Job·MLflow 화면 옆에서 쓰는 AI 작업 동료입니다. 코드를 설명하고, 셀을 만들고 실행하고, 오류를 고칩니다. 오늘 실습에서는 처음부터 끝까지 Genie Code를 옆에 열어 두고 씁니다.</p>
+<p>기본 상태의 Genie Code는 이 실습의 <strong>공유 데이터 위치, 모델 이름 규칙, 별칭 의미, 패키지 규칙</strong>을 모릅니다. 실습 전에 이 규칙을 <strong>한 번 적어 두면</strong> 프롬프트마다 같은 설명을 반복하지 않아도 됩니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">워크스페이스 전체 설정은 바꾸지 않습니다</p>
+<p>이 워크스페이스는 ML 실습 말고도 여러 업무에 쓰입니다. 그래서 모든 사용자에게 적용되는 <strong>워크스페이스 인스트럭션·워크스페이스 스킬은 쓰지 않고</strong>, 실습 폴더와 나에게만 적용되는 설정만 씁니다.</p>
+</div>
+<div class="wb-flow">
+<div class="wb-flow__track">
+<div class="wb-flow__item">
+<p><small>0.1 · 실습 폴더</small><strong>AGENTS.md</strong><span>이 폴더 안에서만 읽히는 규칙</span></p>
+</div>
+<div class="wb-flow__arrow"></div>
+<div class="wb-flow__item">
+<p><small>0.2 · 나</small><strong>내 스킬 설치</strong><span>노트북 1개 실행</span></p>
+</div>
+<div class="wb-flow__arrow"></div>
+<div class="wb-flow__item">
+<p><small>0.3 · 나</small><strong>내 인스트럭션</strong><span>내 스키마 · 선호</span></p>
+</div>
+<div class="wb-flow__arrow"></div>
+<div class="wb-flow__item">
+<p><small>0.4 · 나</small><strong>첫 대화</strong><span>공유 데이터 살펴보기</span></p>
+</div>
+</div>
+</div>
+<h2 id="_1">커스터마이징 방법<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>위치</th>
+<th>누가</th>
+<th>적용 범위</th>
+<th>오늘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>폴더 규칙 <code>AGENTS.md</code></strong></td>
+<td><code>mlops_workshop/AGENTS.md</code></td>
+<td>실습 패키지에 포함</td>
+<td>이 폴더(와 하위) 노트북·파일을 열었을 때</td>
+<td>✅ 데이터 위치, 모델·별칭 규칙, 패키지 규칙 → <a href="0-1-agents-md.html">0.1</a></td>
+</tr>
+<tr>
+<td><strong>사용자 스킬</strong></td>
+<td><code>/Users/&lt;나&gt;/.assistant/skills/&lt;이름&gt;/SKILL.md</code></td>
+<td>각 실습자</td>
+<td>나에게만, 요청이 스킬 설명과 맞을 때 또는 <code>@스킬이름</code></td>
+<td>✅ <code>phm-mlflow-uc</code>, <code>phm-training-job</code> → <a href="0-2-my-skills.html">0.2</a></td>
+</tr>
+<tr>
+<td><strong>사용자 인스트럭션</strong></td>
+<td><code>/Users/&lt;나&gt;/.assistant_instructions.md</code></td>
+<td>각 실습자</td>
+<td>나의 모든 응답</td>
+<td>✅ 내 스키마, 선호 → <a href="0-3-my-instructions.html">0.3</a></td>
+</tr>
+<tr>
+<td>워크스페이스 인스트럭션</td>
+<td><code>/Workspace/.assistant_workspace_instructions.md</code></td>
+<td>워크스페이스 관리자</td>
+<td>모든 사용자의 모든 응답</td>
+<td>❌ 오늘은 쓰지 않음</td>
+</tr>
+<tr>
+<td>워크스페이스 스킬</td>
+<td><code>/Workspace/.assistant/skills/</code></td>
+<td>관리자</td>
+<td>모든 사용자</td>
+<td>❌ 오늘은 쓰지 않음</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Genie Code는 노트북·파일을 열면 <strong>그 폴더부터 상위 폴더로 올라가며</strong> <code>AGENTS.md</code>·<code>CLAUDE.md</code>를 찾아 읽습니다. 따로 설정할 것이 없습니다.</li>
+<li>인스트럭션 파일은 <strong>20,000자</strong>까지만 읽습니다. 길고 자세한 절차는 스킬로 옮깁니다.</li>
+<li>인스트럭션은 Quick Fix와 자동완성에는 적용되지 않습니다.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">운영에서는</p>
+<p>ML팀 전용 워크스페이스라면 같은 규칙을 <strong>워크스페이스 인스트럭션·스킬</strong>로 올려 팀 표준으로 쓸 수 있습니다. 여러 팀이 함께 쓰는 워크스페이스라면 오늘처럼 <strong>팀 Git 폴더의 <code>AGENTS.md</code></strong> 와 사용자 스킬로 범위를 좁힙니다.</p>
+</div>
+<h2 id="_2">이 실습에 왜 필요한가<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>실습에서 부딪히는 문제</th>
+<th>적어 두는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>공유 데이터 <code>phm_shared</code>에 실수로 쓰면 모두의 실습이 망가짐</td>
+<td><code>AGENTS.md</code> (읽기 전용 명시)</td>
+</tr>
+<tr>
+<td>필요 없는 <code>%pip install</code>을 넣음</td>
+<td><code>AGENTS.md</code> (환경 버전 5에 이미 있음, 설치 전에 확인)</td>
+</tr>
+<tr>
+<td>피처를 노트북마다 다시 짜면 학습·엣지 피처가 달라짐</td>
+<td><code>AGENTS.md</code> (<code>phm_features.py</code>만 사용)</td>
+</tr>
+<tr>
+<td>Stage(Staging/Production)로 답하는 옛 예제</td>
+<td>스킬 <code>phm-mlflow-uc</code> (별칭 규칙)</td>
+</tr>
+<tr>
+<td>"승격이 안 돼요"를 오류로 착각</td>
+<td>스킬 <code>phm-training-job</code> (검증이 막는 것이 정상)</td>
+</tr>
+<tr>
+<td>같은 워크스페이스에서 여러 명이 실습</td>
+<td>내 인스트럭션 (내 스키마만 쓰기)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="genie-code">Genie Code 사용법 요약<a class="headerlink" href="#genie-code" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>질문·작업 맡기기</td>
+<td>패널에 자연어로 입력. 기본은 <strong>에이전트</strong>로 동작해 셀을 만들고 실행합니다. 설명만 원하면 "코드는 실행하지 말고 설명만 해줘"라고 씁니다</td>
+</tr>
+<tr>
+<td>실행 승인</td>
+<td>실행 전 <strong>Allow / Skip</strong>을 묻습니다. 패널 설정에서 Ask first / Auto-approve를 고릅니다</td>
+</tr>
+<tr>
+<td>코드 설명</td>
+<td>셀에서 <code>/explain</code></td>
+</tr>
+<tr>
+<td>오류 고치기</td>
+<td>오류 셀의 <strong>Diagnose error</strong> 또는 <code>/fix</code>. 한 줄로 고칠 수 있는 오류는 <strong>Quick Fix</strong></td>
+</tr>
+<tr>
+<td>환경 오류</td>
+<td><code>/repairEnvironment</code></td>
+</tr>
+<tr>
+<td>문서화</td>
+<td><code>/doc</code> (주석·설명 추가)</td>
+</tr>
+<tr>
+<td>스킬 직접 지정</td>
+<td><code>@phm-mlflow-uc</code>처럼 <code>@</code> 뒤에 스킬 이름</td>
+</tr>
+<tr>
+<td>기억시키기</td>
+<td>"앞으로 AUC는 소수 셋째 자리까지 보여줘. 기억해" → 메모리에 저장</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">데이터와 권한</p>
+<ul>
+<li>Genie Code는 <strong>내 Unity Catalog 권한</strong> 안에서만 데이터를 읽고 작업합니다. 내가 못 보는 테이블은 Genie Code도 못 봅니다.</li>
+<li>파트너 모델 제공자는 이 기능으로 보낸 데이터를 보관하지 않습니다(zero data retention). Databricks는 이 데이터를 제3자용 기반 모델 학습에 쓰지 않습니다.</li>
+<li><strong>Auto-approve는 편의 기능이지 보안 경계가 아닙니다.</strong> 오늘은 실행 전 내용을 읽고 <strong>Allow</strong>를 누르는 습관을 들입니다.</li>
+<li>Genie Code의 에이전트 기능은 계정·워크스페이스의 <strong>Partner-powered AI features</strong>가 켜져 있어야 동작합니다(관리자 설정).</li>
+</ul>
+</div>
+<h2 id="_3">실습 파일<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mlops_workshop/AGENTS.md</code></td>
+<td>실습 폴더 규칙 (0.1)</td>
+</tr>
+<tr>
+<td><code>mlops_workshop/step0/0_setup_my_genie_code</code></td>
+<td>내 인스트럭션·내 스킬 설치 노트북 (0.2·0.3)</td>
+</tr>
+<tr>
+<td><code>mlops_workshop/genie-code/</code></td>
+<td>스킬 2종과 인스트럭션 원본(전달받은 <code>mlops_workshop.zip</code> 안). 내용은 각 페이지에서 복사 버튼으로도 가져올 수 있습니다</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="하단/푸터" >
+        
+          
+          <a href="../00-start/prerequisites.html" class="md-footer__link md-footer__link--prev" aria-label="이전: 사전 준비">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                이전
+              </span>
+              <div class="md-ellipsis">
+                사전 준비
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="./0-1-agents-md.html" class="md-footer__link md-footer__link--next" aria-label="다음: 0.1) 실습 폴더 규칙 AGENTS.md">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                다음
+              </span>
+              <div class="md-ellipsis">
+                0.1) 실습 폴더 규칙 AGENTS.md
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["content.code.copy","content.code.annotate","navigation.footer","navigation.indexes","navigation.path","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"클립보드에 복사됨","clipboard.copy":"클립보드로 복사","clipboard.error":"Could not copy to clipboard","search.result.more.one":"이 문서에서 1개의 검색 결과 더 보기","search.result.more.other":"이 문서에서 #개의 검색 결과 더 보기","search.result.none":"검색어와 일치하는 문서가 없습니다","search.result.one":"1개의 일치하는 문서","search.result.other":"#개의 일치하는 문서","search.result.placeholder":"검색어를 입력하세요","search.result.term.missing":"포함되지 않은 검색어","select.version":"버전 선택"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.67a597eb.min.js"></script>
+      
+        <script src="../assets/javascripts/zoom.js"></script>
+      
+    
+  </body>
+</html>

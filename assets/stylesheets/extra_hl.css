@@ -1,0 +1,71 @@
+/* ===== VP1 PHM MLOps HOL overrides (Korean font, level badges, Databricks-only branding) ===== */
+:root {
+  /* Web font when online; Windows/macOS Korean fonts on an internal network */
+  --md-text-font: "Noto Sans KR";
+}
+body, .md-typeset {
+  font-family: var(--md-text-font), "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+}
+.md-typeset { word-break: keep-all; }
+
+/* Co-brand strip on the home hero: HL Mando CI (customer-provided, used only here) + Databricks wordmark */
+.md-typeset .hl-brand p { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 1.2rem; }
+.md-typeset .hl-brand img { height: 1.5rem; width: auto; }
+.md-typeset .hl-brand img.hl-brand__customer { height: 1.35rem; }
+.md-typeset .hl-brand .hl-brand__x { color: var(--wb-muted); font-size: 0.9rem; }
+
+/* Level / track badges */
+.md-typeset .hl-track {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+.md-typeset .hl-track--basic { background: #1B3139; color: #fff; }
+.md-typeset .hl-track--adv { background: #FF3621; color: #fff; }
+.md-typeset .hl-track--inst { background: #E7E3DC; color: #1B3139; }
+.md-typeset .hl-track--opt { background: transparent; color: #6B777C; border: 1px dashed #A7B0B4; }
+
+/* Small product icon in front of a heading or card title */
+.md-typeset img.hl-icon { height: 1.3em; width: auto; vertical-align: -0.25em; margin-right: 0.3em; }
+
+/* Screenshot frame */
+.md-typeset img[src*="/images/0"] {
+  border: 1px solid var(--wb-line);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(27, 49, 57, 0.08);
+}
+
+/* Persona avatars: our SVGs already have a circle background */
+.md-typeset .wb-persona > p:first-child img[src*="personas"] { background: transparent; }
+
+/* "Genie Code로 해 보기" boxes reuse the prompt style; the optional ones are dashed */
+.md-typeset .admonition.prompt.genie-opt { border: 1px dashed rgba(27, 49, 57, 0.35); box-shadow: none; }
+
+@media print {
+  .md-header, .md-sidebar, .md-footer, .md-tabs { display: none !important; }
+  .md-content { margin: 0 !important; }
+  .md-typeset img { max-width: 100% !important; page-break-inside: avoid; }
+}
+
+/* HL Mando CI accent (HL Sky Blue #00B4ED) — only for customer-side business elements, never for alerts */
+.md-typeset { --hl-sky: #00B4ED; --hl-navy: #002B68; }
+.md-typeset .hl-biz {
+  display: inline-block;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--hl-navy);
+  background: rgba(0, 180, 237, 0.14);
+}
+.md-typeset blockquote:has(.hl-biz) {
+  border-left-color: var(--hl-sky);
+  background: rgba(0, 180, 237, 0.06);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}

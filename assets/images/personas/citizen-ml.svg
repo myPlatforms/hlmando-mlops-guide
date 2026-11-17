@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Citizen ML Engineer">
+  <circle cx="48" cy="48" r="48" fill="#F9F7F4"/>
+  <path d="M18 88c3-17 15-26 30-26s27 9 30 26" fill="#3A5560"/>
+  <path d="M40 62l8 9 8-9" fill="#F9F7F4"/>
+  <circle cx="48" cy="40" r="15" fill="#E9C8A8"/>
+  <path d="M32 42c-1-14 6-21 16-21s17 7 16 21c-2-7-8-11-16-11s-14 4-16 11z" fill="#4A3426"/>
+  <circle cx="42" cy="41" r="1.8" fill="#1B3139"/><circle cx="54" cy="41" r="1.8" fill="#1B3139"/>
+  <path d="M43 47c3 2.5 7 2.5 10 0" stroke="#1B3139" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <rect x="57" y="64" width="24" height="17" rx="2.5" fill="#fff" stroke="#1B3139" stroke-width="1.5"/>
+  <rect x="61" y="73" width="3.5" height="5" fill="#00A972"/><rect x="67" y="70" width="3.5" height="8" fill="#1B3139"/><rect x="73" y="67" width="3.5" height="11" fill="#FF3621"/>
+</svg>
